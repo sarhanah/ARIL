@@ -1,17 +1,52 @@
-<a href="https://hapi.dev"><img src="https://raw.githubusercontent.com/hapijs/assets/master/images/family.png" width="180px" align="right" /></a>
+<div align="center">
+  <img width="200" height="200"
+    src="https://s3.amazonaws.com/pix.iemoji.com/images/emoji/apple/ios-11/256/crayon.png">
+  <h1>@jimp/core</h1>
+</div>
 
-# @hapi/bourne
+The main Jimp class. This class can be extended with types and bitmap manipulation functions. Out of the box it does not support any image type.
 
-#### JSON.parse() drop-in replacement with prototype poisoning protection.
+## Available Methods
 
-**bourne** is part of the **hapi** ecosystem and was designed to work seamlessly with the [hapi web framework](https://hapi.dev) and its other components (but works great on its own or with other frameworks). If you are using a different web framework and find this module useful, check out [hapi](https://hapi.dev) – they work even better together.
+### Jimp
 
-### Visit the [hapi.dev](https://hapi.dev) Developer Portal for tutorials, documentation, and support
+The Jimp class constructor.
 
-## Useful resources
+### addConstants
 
-- [Documentation and API](https://hapi.dev/family/bourne/)
-- [Version status](https://hapi.dev/resources/status/#bourne) (builds, dependencies, node versions, licenses, eol)
-- [Changelog](https://hapi.dev/family/bourne/changelog/)
-- [Project policies](https://hapi.dev/policies/)
-- [Free and commercial support options](https://hapi.dev/support/)
+Add constant or static methods to the Jimp constructor.
+
+```js
+addConstants({
+  MIME_SPECIAL: 'image/special'
+});
+```
+
+### addJimpMethods
+
+Add a bitmap manipulation method to Jimp constructor. These method should return this so that the function can be chain-able.
+
+```js
+addJimpMethods({
+  cropCrazy: function() {
+    // Your custom image manipulation method
+
+    return this;
+  }
+})
+
+const image = await Jimp.read(...);
+
+image.resize(10, Jimp.AUTO),
+  .cropCrazy();
+
+await image.writeAsync('test.png');
+```
+
+### addType
+
+Add a image mime type to Jimp constructor. First argument is a mime type and the second is an array of file extension for that type.
+
+```js
+addType('image/special', ['spec', 'special']);
+```
